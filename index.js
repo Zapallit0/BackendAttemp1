@@ -3,6 +3,9 @@ import { PORT,mongoDBURL } from "./config.js"
 import mongoose from "mongoose";
 import booksRoute from './routes/booksRoute.js';
 import engineerRoute from './routes/engineerRoute.js';
+import clientRoute from './routes/clientsRoute.js';
+import serviceRoute from './routes/serviceRoute.js';
+
 import cors from 'cors';
 
 const app = express();
@@ -24,6 +27,8 @@ app.get('/',(request,response)=>{
 });
 app.use('/books', booksRoute);
 app.use('/engineer',engineerRoute);
+app.use('/client', clientRoute);
+app.use('/services',serviceRoute)
 
 mongoose
     .connect(mongoDBURL)
