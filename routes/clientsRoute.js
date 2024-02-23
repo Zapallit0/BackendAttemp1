@@ -46,7 +46,9 @@ router.get('/', async(request, response) => {
     try {
         const client=await Client.find({});
         return response.status(200).json(
-            client
+            {
+                clients:client
+            }
         );
     } catch (error) {
         console.log(error);

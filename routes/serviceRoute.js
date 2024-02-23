@@ -44,7 +44,7 @@ router.get('/',async(request,response) =>{
     try {
         const service=await Service.find({});
         return response.status(200).json(
-            service
+            {services:service}
         );
     } catch (error) {
         console.log(error);

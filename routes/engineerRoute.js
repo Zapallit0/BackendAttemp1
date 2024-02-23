@@ -39,9 +39,9 @@ router.post('/',async(request, response)=>{
 //Get all the engineers
 router.get('/', async(request,response)=>{
     try {
-        const engineer=await Engineer.find({});
+        const engineers=await Engineer.find({});
         return response.status(200).json(
-            engineer
+            {engineers:engineers}
         );
     } catch (error) {
         console.log(error);

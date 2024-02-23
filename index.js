@@ -26,8 +26,8 @@ app.get('/',(request,response)=>{
     return response.status(234).send('Welcome to MERN Jhers')
 });
 app.use('/books', booksRoute);
-app.use('/engineer',engineerRoute);
-app.use('/client', clientRoute);
+app.use('/engineers',engineerRoute);
+app.use('/clients', clientRoute);
 app.use('/services',serviceRoute)
 
 mongoose
