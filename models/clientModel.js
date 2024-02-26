@@ -42,6 +42,7 @@ const clientSchema=mongoose.Schema({
     },
     Servicios_Pedidos:{
         type:Number,
+        default:0,
     },
 })
 

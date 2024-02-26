@@ -12,8 +12,7 @@ router.post('/',async(request, response) => {
             !request.body.Representante.nombre||
             !request.body.Representante.apellido||
             !request.body.Representante.DNI||
-            !request.body.Representante.cargo||
-            !request.body.Servicios_Pedidos)
+            !request.body.Representante.cargo)
             {
                 return response.status(400).send({
                     message:"Manda todos los datos del cliente"
