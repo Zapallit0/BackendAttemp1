@@ -47,6 +47,7 @@ router.get('/', async(request, response) => {
         const client=await Client.find({});
         return response.status(200).json(
             {
+                count: client.length,
                 clients:client
             }
         );
@@ -99,7 +100,7 @@ router.put('/:id',async(request, response) => {
     }
 })
 
-
+//Delete one client
 router.delete('/:id',async(request,response)=>{
     try {
         const {id}=request.params;

@@ -29,6 +29,10 @@ const engineerSchema=mongoose.Schema({
     NServicios_Hechos:{
         type:Number,
         default:0,
+    },
+    Asignado:{
+        type:Boolean,
+        default:false,
     }
 })
 

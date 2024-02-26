@@ -5,6 +5,8 @@ import booksRoute from './routes/booksRoute.js';
 import engineerRoute from './routes/engineerRoute.js';
 import clientRoute from './routes/clientsRoute.js';
 import serviceRoute from './routes/serviceRoute.js';
+import solutionRoute from './routes/solutionsRoute.js';
+
 
 import cors from 'cors';
 
@@ -25,10 +27,12 @@ app.get('/',(request,response)=>{
     console.log(request)
     return response.status(234).send('Welcome to MERN Jhers')
 });
+
 app.use('/books', booksRoute);
 app.use('/engineers',engineerRoute);
 app.use('/clients', clientRoute);
 app.use('/services',serviceRoute)
+app.use('/solutions', solutionRoute);
 
 mongoose
     .connect(mongoDBURL)

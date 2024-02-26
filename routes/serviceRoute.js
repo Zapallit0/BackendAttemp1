@@ -44,7 +44,10 @@ router.get('/',async(request,response) =>{
     try {
         const service=await Service.find({});
         return response.status(200).json(
-            {services:service}
+            {
+                count: service.length,    
+                services:service
+            }
         );
     } catch (error) {
         console.log(error);
@@ -54,4 +57,59 @@ router.get('/',async(request,response) =>{
     }
 })
 
+//Get One Service
+router.get('/:id',async(request,response) => {
+    try {
+        const {id}=request.params;
+        const service=await Service.findById(id);
+        return response.status(200).json(service);
+    } catch (error) {
+        console.log(error)
+        response.status(500).send({
+            message: error.message
+        })
+    }
+})
+
+//Update info Service
+router.put('/:id',async(request,response) => {
+    try {
+        if(!request.body.nombre||
+            !request.body.descripcion||
+            !request.body.rubro||
+            !request.body.requerimientos||
+            !request.body.requerimientos.nombre||
+            !request.body.requerimientos.descripcion||
+            !request.body.requerimientos.pasos||
+            !request.body.duracion||
+            !request.body.etapas){
+                return response.status(400).send({
+                    message:"Manda todos los de los servicios"
+                });
+            }
+            const {id}=request.params;
+            const result=await Service.findByIdAndUpdate(id,request.body)
+            if(!result){
+                return response.status(404).json({message:"Servicio no encontrado"})
+            }
+            return response.status(200).send({message:"Informacion Actualizada"});    
+    } catch (error) {
+        
+    }
+})
+
+//Delete a Service
+router.delete('/:id',async(request,response)=>{
+    try {
+        const {id}=request.params;
+        const result=await Service.findByIdAndDelete(id)
+        if(!result){
+            return response.status(404).json({message:"Servicio no encontrado"})
+        }
+        return response.status(200).send({message:"Servicios eliminado correctamente"});
+    } catch (error) {
+        console.log(error.mensaje);
+        response.status(500).send({message:error.menssage})
+    }
+})
 export default router;

@@ -1,7 +1,70 @@
-import express, { request, response } from 'express';
+import express from 'express';
 import { Engineer } from '../models/engineerModel.js';
 
 const router=express.Router();
+
+//Get Sum of the Services done
+router.get('/TotalServices',(request,response)=>{
+    try{
+        Engineer.aggregate([
+        {$group:{
+            _id:null,
+            totalServiciosHechos:{
+                $sum:"$NServicios_Hechos"
+            }
+        }}
+    ])
+    .then(result=>{
+        response.json({
+            totalServices:result[0].totalServiciosHechos});
+    })
+    }
+    catch(error){
+        console.log(error.mensaje);
+        response.status(500).send({message:error.message})
+    }
+})
+
+//Get the no assinged enginniers
+router.get('/unassigned', async(request, response) => {
+    try {
+        const engineers=await Engineer.find({Asignado:false});
+        return response.status(200).json({
+            count:engineers.length,
+            engineers: engineers
+        });
+    } catch (error) {
+        console.log(error.mensaje);
+        response.status(500).send({message:error.menssage})
+    }
+})
+
+//Get the assinged engineers
+router.get('/assigned', async(request, response) => {
+    try {
+        const engineers=await Engineer.find({Asignado:true});
+        return response.status(200).json({
+            count:engineers.length,
+            engineers: engineers
+        });
+    } catch (error) {
+        console.log(error.mensaje);
+        response.status(500).send({message:error.menssage})
+    }
+})
+//Get all the users with master
+router.get('/Masters', async(request, response) => {
+    try {
+        const engineers=await Engineer.find({Grado:"Master"});
+        return response.status(200).json({
+            count:engineers.length,
+            engineers: engineers
+        });
+    } catch (error) {
+        console.log(error.mensaje);
+        response.status(500).send({message:error.menssage})
+    }
+})
 
 //Crear un nuevo ingeniero para 
 router.post('/',async(request, response)=>{
@@ -41,7 +104,10 @@ router.get('/', async(request,response)=>{
     try {
         const engineers=await Engineer.find({});
         return response.status(200).json(
-            {engineers:engineers}
+            {
+                count: engineers.length,
+                engineers:engineers
+            }
         );
     } catch (error) {
         console.log(error);
@@ -104,6 +170,7 @@ router.delete('/:id',async(request,response)=>{
         response.status(500).send({message:error.menssage})
     }
 })
+
 
 
 export default router
